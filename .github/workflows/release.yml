@@ -15,4 +15,4 @@ jobs:
         steps:
         - name: Version number validation
           shell: bash
-          run: ruby version_validation.rb ${{ github.event.inputs.version }}
+          run: ruby ./version_validation.rb ${{ github.event.inputs.version }}
