@@ -15,6 +15,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        ref: develop
     - name: Version number validation
       shell: bash
       run: ruby ./version_validation.rb ${{ github.event.inputs.version }}
+    - name: Create release branch
+      uses: peterjgrainger/action-create-branch@v2.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'release-${{ github.event.inputs.version }}'
