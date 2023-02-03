@@ -70,6 +70,7 @@ jobs:
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         signoff: false
+        base: main
         branch: 'release-${{ github.event.inputs.version }}'
         delete-branch: false
         title: 'Release Version:${{ github.event.inputs.version }}'
@@ -77,4 +78,3 @@ jobs:
         assignees: shabib87
         reviewers: shabib87
         draft: false
-        
