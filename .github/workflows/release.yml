@@ -31,7 +31,8 @@ jobs:
         branch: 'release-${{ github.event.inputs.version }}'
     - name: Switch to release branch
       shell: bash
-      run: git switch release-${{ github.event.inputs.version }}
+      # run: git switch release-${{ github.event.inputs.version }}
+      run: git branch --show-current
     - name: Update translations
       shell: bash
       run: sh ./update_translation.sh ${{ github.event.inputs.version }}
