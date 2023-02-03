@@ -30,19 +30,19 @@ jobs:
       with:
         branch: 'release-${{ github.event.inputs.version }}'
     - name: Switch to release branch
-      shell: bash
-      # run: git switch release-${{ github.event.inputs.version }}
-      run: git branch --show-current
-    - name: Update translations
-      shell: bash
-      run: sh ./update_translation.sh ${{ github.event.inputs.version }}
-    - name: Git add and commit for translation change
-      shell: bash
-      run: git add . && git commit -m "updated translations"
-    - name: Update build
-      shell: bash
-      run: sh ./update_build.sh ${{ github.event.inputs.version }}
-    - name: Git add and commit for build change
-      shell: bash
-      run: git add . && git commit -m "updated release build"
+      uses: actions/checkout@v3
+      with:
+        ref: release-${{ github.event.inputs.version }}
+    # - name: Update translations
+    #   shell: bash
+    #   run: sh ./update_translation.sh ${{ github.event.inputs.version }}
+    # - name: Git add and commit for translation change
+    #   shell: bash
+    #   run: git add . && git commit -m "updated translations"
+    # - name: Update build
+    #   shell: bash
+    #   run: sh ./update_build.sh ${{ github.event.inputs.version }}
+    # - name: Git add and commit for build change
+    #   shell: bash
+    #   run: git add . && git commit -m "updated release build"
     
