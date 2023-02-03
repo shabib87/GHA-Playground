@@ -1,0 +1,19 @@
+name: Generate Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version number"
+        type: string
+        required: true
+
+jobs:
+    hello:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Version number validation
+            shell: bash
+            run: ruby version_validation.rb ${{ github.event.inputs.version }}
+            
