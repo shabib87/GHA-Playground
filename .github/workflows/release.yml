@@ -17,6 +17,9 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: develop
+    - name: Install JQ, specific to this repo
+      shell: bash
+      run: sudo apt-get install jq
     - name: Version number validation
       shell: bash
       run: ruby ./version_validation.rb ${{ github.event.inputs.version }}
@@ -26,3 +29,19 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         branch: 'release-${{ github.event.inputs.version }}'
+    - name: Switch to release branch
+      shell: bash
+      run: git switch release-${{ github.event.inputs.version }}
+    - name: Update translations
+      shell: bash
+      run: sh ./update_translation.sh ${{ github.event.inputs.version }}
+    - name: Git add and commit for translation change
+      shell: bash
+      run: git add . && git commit -m "updated translations"
+    - name: Update build
+      shell: bash
+      run: sh ./update_build.sh ${{ github.event.inputs.version }}
+    - name: Git add and commit for build change
+      shell: bash
+      run: git add . && git commit -m "updated release build"
+    
