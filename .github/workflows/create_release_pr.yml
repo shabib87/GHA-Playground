@@ -1,4 +1,4 @@
-name: Generate Release Build & Create Release PR
+name: Prepare Release Build & PR
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         required: true
 
 jobs:
-  create_release_pr:
+  prepare_release_branch:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,12 +29,20 @@ jobs:
     - name: Update build
       shell: bash
       run: sh ./update_build.sh ${{ github.event.inputs.version }}
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+    - name: Create relase branch
+      uses: EndBug/add-and-commit@v9
       with:
-        branch: 'release-${{ github.event.inputs.version }}'
-        delete-branch	: true
-        base: main
-        title: 'Release Version:${{ github.event.inputs.version }}'
-        
+        message: Updated translation & uploaded build
+        committer_name: GitHub Actions
+        committer_email: actions@github.com
+        new_branch: 'release-${{ github.event.inputs.version }}'
+
+    # - name: Create Pull Request
+    #   uses: peter-evans/create-pull-request@v4
+    #   with:
+    #     branch: 'release-${{ github.event.inputs.version }}'
+    #     delete-branch	: true
+    #     base: main
+    #     title: 'Release Version:${{ github.event.inputs.version }}'
+
     
