@@ -1,0 +1,61 @@
+name: Publish tag and release notes
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  tag_and_release:
+    name: Create tag and publish release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: main
+    - name: Install JQ
+      shell: bash
+      run: sudo apt-get install jq
+    - name: Get version
+      shell: bash
+      run: echo "RELEASE_TAG=$(jq -r '.version' mock_build.json)" >> $GITHUB_ENV
+    - name: Create release tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: $RELEASE_TAG
+    - name: Create github release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          try {
+            await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: process.env.RELEASE_TAG,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: process.env.RELEASE_TAG,
+              body: process.env.RELEASE_BODY,
+            });
+          } catch (error) {
+            core.setFailed(error.message);
+          }
+
+  reabse_develop:
+    name: Rebase release changes to develop
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: develop
+    - name: Rebase main to develop
+      run: |
+        git config --global user.email "${GITHUB_ACTOR}"
+        git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+        git rebase main 
+        git push --force-with-lease origin develop

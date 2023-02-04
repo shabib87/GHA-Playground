@@ -32,7 +32,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: develop
-    - name: Install JQ, specific to this repo
+    - name: Install JQ
       shell: bash
       run: sudo apt-get install jq
     - name: Version number validation
