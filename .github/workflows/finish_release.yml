@@ -46,16 +46,21 @@ jobs:
 
   reabse_develop:
     name: Rebase release changes to develop
+    needs: [ tag_and_release ]
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        ref: develop
+        ref: main
     - name: Rebase main to develop
       run: |
         git config --global user.email "${GITHUB_ACTOR}"
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+        git remote update
+        git pull
+        git switch develop
         git rebase main 
         git push --force-with-lease origin develop
+        
