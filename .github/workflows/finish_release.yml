@@ -60,5 +60,5 @@ jobs:
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch origin
         git rebase origin/main 
-        git push --force-with-lease origin develop
+        git push origin develop
         
