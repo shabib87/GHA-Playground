@@ -3,7 +3,7 @@ name: Publish tag and release notes
 on: 
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   tag_and_release:
@@ -13,8 +13,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      # with:
-      #   ref: main
+      with:
+        ref: main
     - name: Install JQ
       shell: bash
       run: sudo apt-get install jq
@@ -31,7 +31,7 @@ jobs:
         script: |
           try {
             await github.rest.repos.createRelease({
-              draft: true,
+              draft: false,
               generate_release_notes: true,
               name: process.env.RELEASE_TAG,
               owner: context.repo.owner,
@@ -43,4 +43,19 @@ jobs:
           } catch (error) {
             core.setFailed(error.message);
           }
-    
+
+  reabse_develop:
+    name: Rebase release changes to develop
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: develop
+    - name: Rebase main to develop
+      run: |
+        git config --global user.email "${GITHUB_ACTOR}"
+        git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+        git rebase main 
+        git push --force-with-lease origin develop
