@@ -20,7 +20,10 @@ jobs:
       run: sudo apt-get install jq
     - name: Get version
       shell: bash
-      run: echo "VERSION_TAG=$(jq -r '.version' mock_build.json)" >> $GITHUB_ENV && echo $VERSION_TAG
+      run: echo "VERSION_TAG=$(jq -r '.version' mock_build.json)" >> $GITHUB_ENV
+    - name: Test
+      shell: bash
+      run: echo $VERSION_TAG
     # - name: Create tag
     #   uses: EndBug/latest-tag@latest
     #   with:
