@@ -61,6 +61,4 @@ jobs:
         git fetch origin
         git rebase origin/main 
         git push --force-with-lease origin develop
-    # - name: Setup upterm session
-    #   uses: lhotari/action-upterm@v1
         
