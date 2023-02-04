@@ -1,4 +1,4 @@
-name: Prepare Release Build & PR
+name: Start Release
 
 on:
   workflow_dispatch:
