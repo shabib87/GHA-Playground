@@ -2,9 +2,7 @@
 
 ## Release Workflow
 
-[![Start Release](https://github.com/shabib87/GHA-Playground/actions/workflows/create_release_pr.yml/badge.svg)](https://github.com/shabib87/GHA-Playground/actions/workflows/create_release_pr.yml)
-
-[![Finish Release](https://github.com/shabib87/GHA-Playground/actions/workflows/finish_release.yml/badge.svg?branch=develop)](https://github.com/shabib87/GHA-Playground/actions/workflows/finish_release.yml)
+[![Start Release](https://github.com/shabib87/GHA-Playground/actions/workflows/create_release_pr.yml/badge.svg)](https://github.com/shabib87/GHA-Playground/actions/workflows/create_release_pr.yml) [![Finish Release](https://github.com/shabib87/GHA-Playground/actions/workflows/finish_release.yml/badge.svg?branch=develop)](https://github.com/shabib87/GHA-Playground/actions/workflows/finish_release.yml)
 
 This repo demonstrates and example of how to use a [manually triggered workflow](https://dev.to/this-is-learning/manually-trigger-a-github-action-with-workflowdispatch-3mga) that’ll take release number as input to publish release.
 
