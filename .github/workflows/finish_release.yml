@@ -58,8 +58,9 @@ jobs:
       run: |
         git config --global user.email "${GITHUB_ACTOR}"
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
-        # git rebase origin/main 
-        # git push --force-with-lease origin develop
-    - name: Setup upterm session
-      uses: lhotari/action-upterm@v1
+        git fetch origin
+        git rebase origin/main 
+        git push --force-with-lease origin develop
+    # - name: Setup upterm session
+    #   uses: lhotari/action-upterm@v1
         
