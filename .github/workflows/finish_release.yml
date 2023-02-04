@@ -53,13 +53,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        ref: main
+        ref: develop
     - name: Rebase main to develop
       run: |
         git config --global user.email "${GITHUB_ACTOR}"
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch origin
-        git checkout --track origin/develop
         git rebase main 
         git push --force-with-lease origin develop
         
