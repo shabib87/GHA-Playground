@@ -15,8 +15,14 @@ jobs:
       uses: actions/checkout@v3
       # with:
       #   ref: main
+    - name: Install JQ, specific to this repo
+      shell: bash
+      run: sudo apt-get install jq
+    - name: Get version
+      shell: bash
+      run: echo "$(jq -r '.version' mock_build.json)" >> ENV["VERSION_TAG"]
     - name: Create tag
       uses: EndBug/latest-tag@latest
       with:
-        ref: 1.0.0
+        ref: ENV["VERSION_TAG"]
     
