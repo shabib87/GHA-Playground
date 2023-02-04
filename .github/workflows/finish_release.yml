@@ -1,4 +1,4 @@
-name: Publish tag and release notes
+name: Finish Release
 
 on: 
   push:
@@ -58,9 +58,8 @@ jobs:
       run: |
         git config --global user.email "${GITHUB_ACTOR}"
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
-        git remote update
-        git pull
-        git switch develop
+        git fetch origin
+        git checkout --track origin/develop
         git rebase main 
         git push --force-with-lease origin develop
         
